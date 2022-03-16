@@ -365,8 +365,9 @@ class Car:
         self.position = convertStructLocationToVector(tick_packet.game_cars[self.index])
         self.velocity = convertStructVelocityToVector(tick_packet.game_cars[self.index])
         self.boost = tick_packet.game_cars[self.index].boost
-        if tick_packet.game_info.is_round_active:
-            speed = self.velocity.magnitude()
+        speed = self.velocity.magnitude()
+        #easiest way to weed out faulty data
+        if speed >= 0.1:
             self.speedHistory.update(speed)
             self.boostHistory.update(self.boost)
 
